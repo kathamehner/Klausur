@@ -1,0 +1,50 @@
+<html><head>
+ 	<title>Nachschüssige Rentenrechnung</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 	<script>
+ 	"use strict";
+ 	function fRentenrechnung() {
+
+ 	var vRente = parseFloat(document.getElementById("idRente").value);
+ 	var vZinssatz = parseFloat(document.getElementById("idZinssatz").value);
+ 	var vLaufzeit = parseFloat(document.getElementById("idLaufzeit").value);
+ 	var vZinsfaktor;
+ 	var vRentenendwert;
+ 	var vZinsen;
+ 	var vKapital;
+	var vStartjahr = 0;
+	var vAusgabe="";
+
+
+	vAusgabe = "<table border 1>"
+	vAusgabe = vAusgabe + "<tr><th>Jahr</th><th>Kapital am 1.1.</th><th>Zinsen am 31.12.</th><th>Rente am 31.12.</th><th>Kapital am 31.12.</th></tr>";
+
+ 	while (vStartjahr<=vLaufzeit){
+
+	vAusgabe = vAusgabe + "Der Rentenendwert beträgt" + vKapital + " €";
+
+	vZinsfaktor = 1 + vZinssatz/100;
+ 	vRentenendwert = vRente*(Math.pow(vZinsfaktor,vStartjahr)-1)/ (vZinsfaktor-1);
+ 	vZinsen = vRentenendwert * vZinssatz / 100;
+ 	vKapital = vRentenendwert + vZinsen + vRente;
+
+ 	vAusgabe = vAusgabe + "<tr> <td>" + vStartjahr + "</td> <td>" + vRentenendwert.toFixed(2) + " Euro" + "</td> <td>" + vZinsen.toFixed(2) + " Euro" + "</td> <td>" + vRente + " Euro " + "</td> <td>" + vKapital.toFixed(2) + " Euro " + "</td> </tr>";
+
+ 	vStartjahr ++;
+
+ 	}
+
+ 	document.getElementById("idAusgabe").innerHTML = vAusgabe;
+
+ 	}
+ 	</script>
+ 	</head>
+
+ 	<body><h1>Nachschüssige Rentenrechnung</h1><br>
+		Zinssatz: <input id="idZinssatz" type="text" value="2">%<br>
+	 	Nachschüssige Rente: <input id="idRente" type="text" value="100">€<br>
+	 	Laufzeit: <input id="idLaufzeit" type="text" value="5"> Jahre<br><br>
+ 	<button onclick="fRentenrechnung();">Berechnen</button>
+ 	<div id="idAusgabe"></div>
+
+ 	</body></html>
